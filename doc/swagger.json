@@ -1,0 +1,308 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "微服务的各种示例功能",
+    "version" : "v1",
+    "title" : "示例代码"
+  },
+  "host" : "test-api.998jk.com",
+  "basePath" : "/demo",
+  "tags" : [ {
+    "name" : "用户"
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/user/pb" : {
+      "get" : {
+        "tags" : [ "用户" ],
+        "summary" : "User列表，GET方法戴参数",
+        "description" : "",
+        "operationId" : "findPage",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "sex",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "total",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/RestfulResultUser"
+            }
+          }
+        }
+      }
+    },
+    "/user/pb/search" : {
+      "post" : {
+        "tags" : [ "用户" ],
+        "summary" : "通用的搜索User列表",
+        "description" : "",
+        "operationId" : "search",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/PagingUser"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/RestfulResultUser"
+            }
+          }
+        }
+      }
+    },
+    "/user/pb/sex" : {
+      "post" : {
+        "tags" : [ "用户" ],
+        "summary" : "User列表,POST传递单个参数,不带分页,不带｛｝",
+        "description" : "",
+        "operationId" : "findBySexSimple",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "sex",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/RestfulResultUser"
+            }
+          }
+        }
+      }
+    },
+    "/user/pb/users" : {
+      "post" : {
+        "tags" : [ "用户" ],
+        "summary" : "User列表,复杂对象传递带分页",
+        "description" : "",
+        "operationId" : "findPageByEntity",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UserVo"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/RestfulResultUser"
+            }
+          }
+        }
+      }
+    },
+    "/user/pb/{sex}" : {
+      "post" : {
+        "tags" : [ "用户" ],
+        "summary" : "User列表,POST传递单个参数,不带分页",
+        "description" : "",
+        "operationId" : "findBySex",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "sex",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/RestfulResultUser"
+            }
+          }
+        }
+      }
+    },
+    "/user/pt/add" : {
+      "post" : {
+        "tags" : [ "用户" ],
+        "summary" : "添加User表数据",
+        "description" : "",
+        "operationId" : "insertOrUpdate",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/RestfulResultUser"
+            }
+          }
+        }
+      }
+    },
+    "/user/pt/{age}/{sex}" : {
+      "delete" : {
+        "tags" : [ "用户" ],
+        "summary" : "根据年龄性别删除User表数据",
+        "description" : "",
+        "operationId" : "delete",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "age",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "sex",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/RestfulResultUser"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "PagingUser" : {
+      "type" : "object",
+      "properties" : {
+        "page" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "pageSize" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "total" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "query" : {
+          "$ref" : "#/definitions/User"
+        },
+        "endIndex" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "needSetTotal" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "startIndex" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "RestfulResultUser" : {
+      "type" : "object",
+      "properties" : {
+        "success" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/User"
+          }
+        }
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "姓名"
+        },
+        "age" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "年龄"
+        },
+        "sex" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "性别",
+          "enum" : [ 1, 2 ]
+        },
+        "address" : {
+          "type" : "string",
+          "description" : "地址"
+        }
+      },
+      "description" : "用户表"
+    },
+    "UserVo" : {
+      "type" : "object",
+      "properties" : {
+        "paging" : {
+          "$ref" : "#/definitions/PagingUser"
+        },
+        "user" : {
+          "$ref" : "#/definitions/User"
+        }
+      },
+      "description" : "用户表的vo"
+    }
+  }
+}
