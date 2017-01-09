@@ -1,17 +1,18 @@
 package com.jztey.demo;
 
-import com.jztey.framework.boot.ApplicationDruid;
-import com.jztey.framework.boot.ApplicationDubbo;
-import com.jztey.framework.boot.ApplicationInterfaceMvc;
-import com.jztey.framework.boot.ApplicationJersey;
-import com.jztey.framework.boot.ApplicationMonitoring;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import com.jztey.demo.service.UserServiceImpl;
+import com.jztey.framework.boot.ApplicationDruid;
+import com.jztey.framework.boot.ApplicationInterfaceMvc;
+import com.jztey.framework.boot.ApplicationMonitoring;
 
 /**
  * Created by Charles on 2016/8/8.

@@ -14,8 +14,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpMethod;
@@ -47,10 +48,21 @@ import com.jztey.framework.util.HttpClient;
 @Service
 @CacheConfig(cacheNames = SpelCacheNameCacheResolver.SPEL_CACHE_NAME)
 @com.alibaba.dubbo.config.annotation.Service
+@ConfigurationProperties(prefix = "demoN", locations = { "classpath:test.properties" })//双重配置文件读取，自定义
 public class UserServiceImpl extends BaseService<User> implements UserService {
 	private final static String DEMO_KEY = "DEMO: com.jztey.demo.service.UserServiceImpl";
 	@Autowired
 	private UserDao userDao;
+
+	private String userNameN;//自定义读取配置文件的变量
+
+	public String getUserNameN() {
+		return userNameN;
+	}
+
+	public void setUserNameN(String userNameN) {
+		this.userNameN = userNameN;
+	}
 
 	@Value("${demo.account}")
 	private String configaccount;
@@ -202,7 +214,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	@Override
 	public RestfulResult<String> getConfig() throws Exception {
 		String configvalue = configaccount + "----" + remark;
-		return new RestfulResult<>(configvalue);
+		String configvalueN =configvalue+"$$$$$$$"+ userNameN;
+		return new RestfulResult<>(configvalueN);
 	}
 
 	@Override
@@ -301,11 +314,11 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 		} else {
 			System.out.println("设置缓存");
 			operations.set(DEMO_KEY, user);
- 
+
 			redisTemplate.expire(DEMO_KEY, 60l, TimeUnit.SECONDS);// 设置过期时间
- 
+
 		}
- 
+
 		return healthAccount + "";
 	}
 
