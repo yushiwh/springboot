@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.jztey.demo.service.UserServiceImpl;
+import com.jztey.demo.entity.Config;
 import com.jztey.framework.boot.ApplicationDruid;
 import com.jztey.framework.boot.ApplicationInterfaceMvc;
 import com.jztey.framework.boot.ApplicationMonitoring;
@@ -23,9 +23,9 @@ import com.jztey.framework.boot.ApplicationMonitoring;
 		, ApplicationCaching.class
 		// , ApplicationDubbo.class//导入dubbo
 		, ApplicationDruid.class// 导入Druid
-		, ApplicationMonitoring.class, 
-		ApplicationInterfaceMvc.class// 统一的异常处理
+		, ApplicationMonitoring.class, ApplicationInterfaceMvc.class// 统一的异常处理
 })
+@EnableConfigurationProperties({ Config.class })
 public class Application {
 
 	@Bean
