@@ -10,13 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpMethod;
@@ -24,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -48,13 +47,13 @@ import com.jztey.framework.util.HttpClient;
 @Service
 @CacheConfig(cacheNames = SpelCacheNameCacheResolver.SPEL_CACHE_NAME)
 @com.alibaba.dubbo.config.annotation.Service
-@ConfigurationProperties(prefix = "demoN", locations = { "classpath:test.properties" })//双重配置文件读取，自定义
+@ConfigurationProperties(prefix = "demoN", locations = { "classpath:test.properties" }) // 双重配置文件读取，自定义
 public class UserServiceImpl extends BaseService<User> implements UserService {
 	private final static String DEMO_KEY = "DEMO: com.jztey.demo.service.UserServiceImpl";
 	@Autowired
 	private UserDao userDao;
 
-	private String userNameN;//自定义读取配置文件的变量
+	private String userNameN;// 自定义读取配置文件的变量
 
 	public String getUserNameN() {
 		return userNameN;
@@ -116,6 +115,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RestfulPagingResult<User> findPage(int sex, int page, int pageSize, int total) {
 		System.out.println("get");
 
@@ -128,6 +128,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RestfulPagingResult<User> search(Paging<User> paging) {
 		System.out.println("search");
 		List<User> userList = new ArrayList<>();
@@ -142,6 +143,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RestfulPagingResult<User> findPageByEntity(UserVo user) {
 		System.out.println("findPageByEntity");
 		User query = new User();
@@ -154,6 +156,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RestfulResult<User> findBySex(int sex) {
 		System.out.println("findPageBySex");
 		List<User> result = userDao.findByKey(sex);
@@ -161,6 +164,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RestfulResult<User> findBySexSimple(int sex) {
 		return findBySex(sex);
 	}
@@ -172,6 +176,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RestfulResult<Map<String, Map<String, List<ExamArea>>>> getAll() throws Exception {
 		RestfulResult<Map<String, Map<String, List<ExamArea>>>> restfulResult = new RestfulResult<>();
 		boolean success = false;
@@ -214,21 +219,24 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	@Override
 	public RestfulResult<String> getConfig() throws Exception {
 		String configvalue = configaccount + "----" + remark;
-		String configvalueN =configvalue+"$$$$$$$"+ userNameN;
+		String configvalueN = configvalue + "$$$$$$$" + userNameN;
 		return new RestfulResult<>(configvalueN);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RestfulResult<User> findBySexPathParam(int sex) {
 		return findBySex(sex);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RestfulResult<User> findBySexQueryParam(int sex) {
 		return findBySex(sex);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RestfulResult<User> getException(int id) {
 
 		if (id < 0) { // 意外异常
@@ -260,6 +268,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RestfulResult<Demo> getConfigHttpClient(int healthAccount, String httpType) throws Exception {
 
 		HttpClient httpClient = HttpClient.instance();
