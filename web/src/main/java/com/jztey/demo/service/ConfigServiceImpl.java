@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import com.jztey.demo.entity.Config;
+import com.jztey.demo.entity.ConfigOther;
 import com.jztey.framework.mvc.RestfulResult;
 
 @Service
@@ -35,6 +36,9 @@ public class ConfigServiceImpl implements ConfigService {
 	@Autowired
 	private Config config;// 注入的方式获取
 
+	@Autowired
+	private ConfigOther configOther;// 注入的方式获取
+
 	@Override
 	public RestfulResult<String> getConfigApplication() throws Exception {
 
@@ -52,7 +56,8 @@ public class ConfigServiceImpl implements ConfigService {
 	@Override
 	public RestfulResult<String> getConfigAutowired() throws Exception {
 
-		String configvalueN = "自动注入的：" + config.getUserNameN();
+		String configvalueN = "自动注入的：" + config.getUserNameN() + "---另外一个test1.properties:"
+				+ configOther.getUserNameN();
 		return new RestfulResult<>(configvalueN);
 
 	}

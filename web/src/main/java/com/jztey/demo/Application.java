@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.jztey.demo.entity.Config;
+import com.jztey.demo.entity.ConfigOther;
 import com.jztey.framework.boot.ApplicationDruid;
 import com.jztey.framework.boot.ApplicationInterfaceMvc;
 import com.jztey.framework.boot.ApplicationMonitoring;
@@ -25,7 +26,7 @@ import com.jztey.framework.boot.ApplicationMonitoring;
 		, ApplicationDruid.class// 导入Druid
 		, ApplicationMonitoring.class, ApplicationInterfaceMvc.class// 统一的异常处理
 })
-@EnableConfigurationProperties({ Config.class })
+@EnableConfigurationProperties({ Config.class, ConfigOther.class }) // 加载多个实体
 public class Application {
 
 	@Bean
