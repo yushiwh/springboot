@@ -21,7 +21,10 @@
 		<demo.version>1.0-SNAPSHOT</demo.version>
 		<!-- 为了覆盖parent中的 jdk1.7 -->
 		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
 	</properties>
+
 
 	<modules>
 		<module>api</module>
@@ -60,7 +63,7 @@
 				<artifactId>demo-web</artifactId>
 				<version>${demo.version}</version>
 			</dependency>
-			 
+
 
 
 

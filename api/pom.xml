@@ -33,6 +33,15 @@
 			<artifactId>hibernate-jpa-2.1-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
 		<!-- 增加 mongodb配置 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -62,9 +71,9 @@
 							<host>test-api.998jk.com</host>
 							<basePath>/demo</basePath>
 							<info>
-								<title>支付中心</title>
+								<title>SpringBootDemo</title>
 								<version>v1</version>
-								<description>支付功能</description>
+								<description>Demo的测试</description>
 							</info>
 							<swaggerDirectory>${basedir}/../web/src/main/resources/doc</swaggerDirectory>
 						</apiSource>
