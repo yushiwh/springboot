@@ -28,6 +28,9 @@ public class DemoController {
 			demo.setSex(i);
 			list.add(demo);
 		}
+		
+		
+		
 
 		return list;
 	}
