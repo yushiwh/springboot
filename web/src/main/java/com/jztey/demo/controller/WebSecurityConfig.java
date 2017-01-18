@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {// 1
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().authenticated() // 所有请求需要认证即登陆才能访问，只是对上面进行bean进行拦截，其他的不用拦截
+		http.authorizeRequests().anyRequest().authenticated() // 所有请求需要认证即登陆才能访问，
 				.and().formLogin().loginPage("/login").failureUrl("/login?error").permitAll() // 5定制登陆行为，登陆页面可以任意访问
 				.and().logout().permitAll(); // 6定制注销的行为，注销请求可以任意访问
 
