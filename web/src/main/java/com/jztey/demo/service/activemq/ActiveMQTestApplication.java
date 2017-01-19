@@ -14,7 +14,7 @@ import org.springframework.jms.core.JmsTemplate;
  */
 // springboot提供CommandLineRunner接口，用于程序启动后执行的代码，通过重写其run方法执行
 
-public class Ch934Application implements CommandLineRunner {
+public class ActiveMQTestApplication implements CommandLineRunner {
 
 	@Autowired
 	JmsTemplate jmsTemplate;// 注入springboot为我们配置好的bean
@@ -28,7 +28,7 @@ public class Ch934Application implements CommandLineRunner {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(Ch934Application.class, args);
+		SpringApplication.run(ActiveMQTestApplication.class, args);
 	}
 
 }
