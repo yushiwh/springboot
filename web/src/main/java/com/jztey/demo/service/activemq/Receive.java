@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
  * 
  * @author yushi
  *
+ *页面中查看ActiveMQ的地址http://10.2.106.223:8161/admin/queues.jsp
+ *
  */
 @Component
 public class Receive {
