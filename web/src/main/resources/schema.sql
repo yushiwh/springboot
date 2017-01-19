@@ -1,3 +1,5 @@
+drop table BanthPerson;
+
 CREATE TABLE `BanthPerson` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(50) NOT NULL,

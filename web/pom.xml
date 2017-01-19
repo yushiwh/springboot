@@ -102,6 +102,18 @@
 		</dependency>
 
 
+		<!-- 增加ActiveMQ的消息依赖 JMS -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-client</artifactId>
+		</dependency>
+
+
 
 		<!-- dubbo -->
 		<dependency>

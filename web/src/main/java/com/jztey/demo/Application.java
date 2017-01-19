@@ -2,6 +2,8 @@ package com.jztey.demo;
 
 import java.net.UnknownHostException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -9,12 +11,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.jztey.demo.entity.Config;
 import com.jztey.demo.entity.ConfigOther;
+import com.jztey.demo.service.activemq.Msg;
 import com.jztey.framework.boot.ApplicationDruid;
 import com.jztey.framework.boot.ApplicationInterfaceMvc;
 import com.jztey.framework.boot.ApplicationMonitoring;
@@ -31,7 +35,11 @@ import com.jztey.framework.boot.ApplicationMonitoring;
 		, ApplicationMonitoring.class, ApplicationInterfaceMvc.class// 统一的异常处理
 })
 @EnableConfigurationProperties({ Config.class, ConfigOther.class }) // 加载多个实体
-public class Application {
+// springboot提供CommandLineRunner接口，用于程序启动后执行的代码，通过重写其run方法执行
+public class Application implements CommandLineRunner {
+
+	@Autowired
+	JmsTemplate jmsTemplate;// 注入springboot为我们配置好的bean
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer() { // 允许跨域
@@ -56,6 +64,14 @@ public class Application {
 		RedisTemplate<Object, Object> template = new RedisTemplate<Object, Object>();
 		template.setConnectionFactory(redisConnectionFactory);
 		return template;
+	}
+
+	@Override
+	public void run(String... arg0) throws Exception {
+		// 通过jmsTemplate的send方法向my-destination目的地发送Msg消息，
+		// 也等于是在消息代理上面定义一个目的地叫my-destination
+		jmsTemplate.send("my-destination", new Msg());
+
 	}
 
 }
