@@ -2,6 +2,8 @@ package com.jztey.demo;
 
 import java.net.UnknownHostException;
 
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -41,6 +43,9 @@ public class Application implements CommandLineRunner {
 	@Autowired
 	JmsTemplate jmsTemplate;// 注入springboot为我们配置好的bean
 
+	@Autowired
+	RabbitTemplate rabbitTemplate;// 可注入SprinfBoot为我们自动配置好的RabbitTemplate
+
 	@Bean
 	public WebMvcConfigurer corsConfigurer() { // 允许跨域
 		return new WebMvcConfigurerAdapter() {
@@ -66,11 +71,19 @@ public class Application implements CommandLineRunner {
 		return template;
 	}
 
+	// 定义目的地及队列，队列的名称为my-queue
+	@Bean
+	public Queue wiselyQueue() {
+		return new Queue("my-queue");
+	}
+
 	@Override
 	public void run(String... arg0) throws Exception {
 		// 通过jmsTemplate的send方法向my-destination目的地发送Msg消息，
 		// 也等于是在消息代理上面定义一个目的地叫my-destination
 		jmsTemplate.send("my-destination", new Msg());
+
+		rabbitTemplate.convertAndSend("my-queue", "来自RabbitMQ的问候");// 通过rabbitTemplate的convertAndSend方法向队列发送消息
 
 	}
 
