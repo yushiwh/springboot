@@ -25,5 +25,10 @@ public interface ConfigService {
 	@RequestMapping(value = "/pb/getConfig/autowired", method = RequestMethod.GET)
 	@ApiOperation(value = "通过注入方式取得配置文件test.properties", response = RestfulResultUser.class)
 	public RestfulResult<String> getConfigAutowired() throws Exception;
+	
+	@RequestMapping(value = "/pb/loader", method = RequestMethod.GET)
+	@ApiOperation(value = "热部署看看", response = RestfulResultUser.class)
+	public RestfulResult<String> loader() throws Exception;
+	
 
 }
