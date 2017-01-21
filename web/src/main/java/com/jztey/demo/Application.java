@@ -55,7 +55,8 @@ import com.rometools.rome.feed.synd.SyndEntry;
 @EnableConfigurationProperties({ Config.class, ConfigOther.class }) // 加载多个实体
 // springboot提供CommandLineRunner接口，用于程序启动后执行的代码，通过重写其run方法执行
 public class Application implements CommandLineRunner {
-	@Value("https://spring.io/blog.atom") // 通过@Value注解注入https://spring.io/blog.atom的资源
+	//@Value("http://www.baidu.com") // 通过@Value注解注入https://spring.io/blog.atom的资源
+	@Value("https://spring.io/blog.atom")//
 	Resource resource;
 
 	@Autowired
@@ -109,6 +110,7 @@ public class Application implements CommandLineRunner {
 	@Bean(name = PollerMetadata.DEFAULT_POLLER)
 	public PollerMetadata poller() { // 2
 		return Pollers.fixedRate(500).get();
+		
 	}
 
 	@Bean
@@ -125,8 +127,8 @@ public class Application implements CommandLineRunner {
 				.<SyndEntry, String> route(payload -> payload.getCategories().get(0).getName(), // 5
 						// 6通过不同的分类的值转向不同的消息通道
 						mapping -> mapping.channelMapping("releases", "releasesChannel") // 6
-								.channelMapping("engineering", "engineeringChannel")
-								.channelMapping("news", "newsChannel"))
+								.channelMapping("engineering", "engineeringChannel"))
+							//	.channelMapping("news", "newsChannel"))//注释掉发送邮件
 
 				.get(); // 7通过get方法获得IntegrationFlows的实体，配置的Spring的Bean
 	}
