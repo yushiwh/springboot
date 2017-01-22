@@ -64,7 +64,7 @@ public class ConfigServiceImpl implements ConfigService {
 
 	@Override
 	public RestfulResult<String> loader() throws Exception {
-		String str = "随意更改这里的文字，热部署哦";
+		String str = "随意更改这里的文字，热部署哦,第二种方法测试一下";
 		return new RestfulResult<>(str);
 	}
 
