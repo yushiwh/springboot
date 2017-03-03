@@ -31,7 +31,7 @@ import com.jztey.demo.entity.BanthPerson;
 /**
  * 配置
  * 
- * @author yushi 2017-01-18
+ * @author yushi 2017-01-18 
  */
 // @Configuration//自动执行Job的配置，如果是手动启动则需要进行注释掉，如果要自动执行导入的语句需要进行打开处理，并且在配置文件中修改成enable
 @EnableBatchProcessing // 开启批处理的支持
